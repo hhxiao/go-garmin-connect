@@ -2,7 +2,6 @@ package garmin
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // GarminSocialProfile is the public-facing user profile. Multiple wellness
@@ -66,7 +65,7 @@ type GarminSocialProfile struct {
 	AllowGolfScoringByConnections bool              `json:"allowGolfScoringByConnections"`
 	UserLevel                     int64             `json:"userLevel"`
 	UserPoint                     int64             `json:"userPoint"`
-	LevelUpdateDate               time.Time         `json:"levelUpdateDate"`
+	LevelUpdateDate               LocalDateTime     `json:"levelUpdateDate"`
 	LevelIsViewed                 bool              `json:"levelIsViewed"`
 	LevelPointThreshold           int64             `json:"levelPointThreshold"`
 	UserPointOffset               int64             `json:"userPointOffset"`

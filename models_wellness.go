@@ -2,7 +2,6 @@ package garmin
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // GarminStats is the daily activity/wellness summary returned by
@@ -23,14 +22,14 @@ type GarminStats struct {
 	WellnessActiveKilocalories           float64         `json:"wellnessActiveKilocalories"`
 	NetRemainingKilocalories             float64         `json:"netRemainingKilocalories"`
 	UserDailySummaryID                   int64           `json:"userDailySummaryId"`
-	CalendarDate                         time.Time       `json:"calendarDate"`
+	CalendarDate                         Date            `json:"calendarDate"`
 	Rule                                 Rule            `json:"rule"`
 	Uuid                                 string          `json:"uuid"`
 	DailyStepGoal                        int64           `json:"dailyStepGoal"`
-	WellnessStartTimeGmt                 time.Time       `json:"wellnessStartTimeGmt"`
-	WellnessStartTimeLocal               time.Time       `json:"wellnessStartTimeLocal"`
-	WellnessEndTimeGmt                   time.Time       `json:"wellnessEndTimeGmt"`
-	WellnessEndTimeLocal                 time.Time       `json:"wellnessEndTimeLocal"`
+	WellnessStartTimeGmt                 LocalDateTime   `json:"wellnessStartTimeGmt"`
+	WellnessStartTimeLocal               LocalDateTime   `json:"wellnessStartTimeLocal"`
+	WellnessEndTimeGmt                   LocalDateTime   `json:"wellnessEndTimeGmt"`
+	WellnessEndTimeLocal                 LocalDateTime   `json:"wellnessEndTimeLocal"`
 	DurationInMilliseconds               int64           `json:"durationInMilliseconds"`
 	WellnessDescription                  json.RawMessage `json:"wellnessDescription"`
 	HighlyActiveSeconds                  int64           `json:"highlyActiveSeconds"`
@@ -94,7 +93,7 @@ type GarminStats struct {
 	HighestRespirationValue              float64         `json:"highestRespirationValue"`
 	LowestRespirationValue               float64         `json:"lowestRespirationValue"`
 	LatestRespirationValue               float64         `json:"latestRespirationValue"`
-	LatestRespirationTimeGmt             time.Time       `json:"latestRespirationTimeGMT"`
+	LatestRespirationTimeGmt             LocalDateTime   `json:"latestRespirationTimeGMT"`
 }
 
 // Rule is a sub-record of GarminStats describing the wellness rule type.
@@ -105,21 +104,21 @@ type Rule struct {
 
 // GarminStepsData is one entry in the steps timeseries.
 type GarminStepsData struct {
-	StartGmt              time.Time `json:"startGMT"`
-	EndGmt                time.Time `json:"endGMT"`
-	Steps                 int64     `json:"steps"`
-	PrimaryActivityLevel  string    `json:"primaryActivityLevel"`
-	ActivityLevelConstant bool      `json:"activityLevelConstant"`
+	StartGmt              LocalDateTime `json:"startGMT"`
+	EndGmt                LocalDateTime `json:"endGMT"`
+	Steps                 int64         `json:"steps"`
+	PrimaryActivityLevel  string        `json:"primaryActivityLevel"`
+	ActivityLevelConstant bool          `json:"activityLevelConstant"`
 }
 
 // GarminHr is the daily heart-rate timeseries.
 type GarminHr struct {
 	UserProfilePk                    int64                      `json:"userProfilePK"`
-	CalendarDate                     time.Time                  `json:"calendarDate"`
-	StartTimestampGmt                time.Time                  `json:"startTimestampGMT"`
-	EndTimestampGmt                  time.Time                  `json:"endTimestampGMT"`
-	StartTimestampLocal              time.Time                  `json:"startTimestampLocal"`
-	EndTimestampLocal                time.Time                  `json:"endTimestampLocal"`
+	CalendarDate                     Date                       `json:"calendarDate"`
+	StartTimestampGmt                LocalDateTime              `json:"startTimestampGMT"`
+	EndTimestampGmt                  LocalDateTime              `json:"endTimestampGMT"`
+	StartTimestampLocal              LocalDateTime              `json:"startTimestampLocal"`
+	EndTimestampLocal                LocalDateTime              `json:"endTimestampLocal"`
 	MaxHeartRate                     int64                      `json:"maxHeartRate"`
 	MinHeartRate                     int64                      `json:"minHeartRate"`
 	RestingHeartRate                 int64                      `json:"restingHeartRate"`
@@ -136,14 +135,14 @@ type HeartRateValueDescriptor struct {
 
 // GarminHydrationData is the daily hydration summary.
 type GarminHydrationData struct {
-	UserID                  int64      `json:"userId"`
-	CalendarDate            time.Time  `json:"calendarDate"`
-	ValueInMl               float64    `json:"valueInML"`
-	GoalInMl                float64    `json:"goalInML"`
-	DailyAverageInMl        float64    `json:"dailyAverageinML"`
-	LastEntryTimestampLocal *time.Time `json:"lastEntryTimestampLocal"`
-	SweatLossInMl           float64    `json:"sweatLossInML"`
-	ActivityIntakeInMl      float64    `json:"activityIntakeInML"`
+	UserID                  int64          `json:"userId"`
+	CalendarDate            Date           `json:"calendarDate"`
+	ValueInMl               float64        `json:"valueInML"`
+	GoalInMl                float64        `json:"goalInML"`
+	DailyAverageInMl        float64        `json:"dailyAverageinML"`
+	LastEntryTimestampLocal *LocalDateTime `json:"lastEntryTimestampLocal"`
+	SweatLossInMl           float64        `json:"sweatLossInML"`
+	ActivityIntakeInMl      float64        `json:"activityIntakeInML"`
 }
 
 // GarminSleepData is the daily sleep summary.
@@ -160,7 +159,7 @@ type GarminSleepData struct {
 type DailySleepDto struct {
 	ID                          int64           `json:"id"`
 	UserProfilePk               int64           `json:"userProfilePK"`
-	CalendarDate                time.Time       `json:"calendarDate"`
+	CalendarDate                Date            `json:"calendarDate"`
 	SleepTimeSeconds            int64           `json:"sleepTimeSeconds"`
 	NapTimeSeconds              int64           `json:"napTimeSeconds"`
 	SleepWindowConfirmed        bool            `json:"sleepWindowConfirmed"`
@@ -234,9 +233,9 @@ type Restlessness struct {
 
 // Sleep is one bin in the sleep movement/stage timeseries.
 type Sleep struct {
-	StartGmt      time.Time `json:"startGMT"`
-	EndGmt        time.Time `json:"endGMT"`
-	ActivityLevel float64   `json:"activityLevel"`
+	StartGmt      LocalDateTime `json:"startGMT"`
+	EndGmt        LocalDateTime `json:"endGMT"`
+	ActivityLevel float64       `json:"activityLevel"`
 }
 
 // SleepStress is one bin in the sleep stress timeseries.
@@ -253,13 +252,13 @@ type WellnessEpochRespirationDtoList struct {
 
 // GarminBodyBatteryData is the daily body-battery timeseries + events.
 type GarminBodyBatteryData struct {
-	Date                                    time.Time                           `json:"date"`
+	Date                                    Date                                `json:"date"`
 	Charged                                 int64                               `json:"charged"`
 	Drained                                 int64                               `json:"drained"`
-	StartTimestampGmt                       time.Time                           `json:"startTimestampGMT"`
-	EndTimestampGmt                         time.Time                           `json:"endTimestampGMT"`
-	StartTimestampLocal                     time.Time                           `json:"startTimestampLocal"`
-	EndTimestampLocal                       time.Time                           `json:"endTimestampLocal"`
+	StartTimestampGmt                       LocalDateTime                       `json:"startTimestampGMT"`
+	EndTimestampGmt                         LocalDateTime                       `json:"endTimestampGMT"`
+	StartTimestampLocal                     LocalDateTime                       `json:"startTimestampLocal"`
+	EndTimestampLocal                       LocalDateTime                       `json:"endTimestampLocal"`
 	BodyBatteryValuesArray                  [][]int64                           `json:"bodyBatteryValuesArray"`
 	BodyBatteryValueDescriptorDtoList       []BodyBatteryValueDescriptorDtoList `json:"bodyBatteryValueDescriptorDTOList"`
 	BodyBatteryDynamicFeedbackEvent         BodyBatteryDynamicFeedbackEvent     `json:"bodyBatteryDynamicFeedbackEvent"`
@@ -269,21 +268,21 @@ type GarminBodyBatteryData struct {
 
 // BodyBatteryActivityEvent is one event in the body-battery activity log.
 type BodyBatteryActivityEvent struct {
-	EventType              string    `json:"eventType"`
-	EventStartTimeGmt      time.Time `json:"eventStartTimeGmt"`
-	TimezoneOffset         int64     `json:"timezoneOffset"`
-	DurationInMilliseconds int64     `json:"durationInMilliseconds"`
-	BodyBatteryImpact      int64     `json:"bodyBatteryImpact"`
-	FeedbackType           string    `json:"feedbackType"`
-	ShortFeedback          string    `json:"shortFeedback"`
+	EventType              string        `json:"eventType"`
+	EventStartTimeGmt      LocalDateTime `json:"eventStartTimeGmt"`
+	TimezoneOffset         int64         `json:"timezoneOffset"`
+	DurationInMilliseconds int64         `json:"durationInMilliseconds"`
+	BodyBatteryImpact      int64         `json:"bodyBatteryImpact"`
+	FeedbackType           string        `json:"feedbackType"`
+	ShortFeedback          string        `json:"shortFeedback"`
 }
 
 // BodyBatteryDynamicFeedbackEvent is the start/end-of-day feedback record.
 type BodyBatteryDynamicFeedbackEvent struct {
-	EventTimestampGmt time.Time `json:"eventTimestampGmt"`
-	BodyBatteryLevel  string    `json:"bodyBatteryLevel"`
-	FeedbackShortType string    `json:"feedbackShortType"`
-	FeedbackLongType  string    `json:"feedbackLongType"`
+	EventTimestampGmt LocalDateTime `json:"eventTimestampGmt"`
+	BodyBatteryLevel  string        `json:"bodyBatteryLevel"`
+	FeedbackShortType string        `json:"feedbackShortType"`
+	FeedbackLongType  string        `json:"feedbackLongType"`
 }
 
 // BodyBatteryValueDescriptorDtoList maps the inner array index to a key.
@@ -320,8 +319,8 @@ type GarminHrvBaseline struct {
 
 // GarminBodyComposition is the multi-day weight / body composition snapshot.
 type GarminBodyComposition struct {
-	StartDate      time.Time          `json:"startDate"`
-	EndDate        time.Time          `json:"endDate"`
+	StartDate      Date               `json:"startDate"`
+	EndDate        Date               `json:"endDate"`
 	DateWeightList []GarminDateWeight `json:"dateWeightList"`
 	TotalAverage   GarminTotalAverage `json:"totalAverage"`
 }
@@ -343,19 +342,19 @@ type GarminTotalAverage struct {
 
 // GarminDateWeight is one weight entry inside GarminBodyComposition.
 type GarminDateWeight struct {
-	SamplePk       int64     `json:"samplePk"`
-	Date           int64     `json:"date"`
-	CalendarDate   time.Time `json:"calendarDate"`
-	Weight         float64   `json:"weight"`
-	Bmi            float64   `json:"bmi"`
-	BodyFat        float64   `json:"bodyFat"`
-	BodyWater      float64   `json:"bodyWater"`
-	BoneMass       int64     `json:"boneMass"`
-	MuscleMass     int64     `json:"muscleMass"`
-	PhysiqueRating float64   `json:"physiqueRating"`
-	VisceralFat    float64   `json:"visceralFat"`
-	MetabolicAge   float64   `json:"metabolicAge"`
-	SourceType     string    `json:"sourceType"`
-	TimestampGmt   int64     `json:"timestampGMT"`
-	WeightDelta    float64   `json:"weightDelta"`
+	SamplePk       int64   `json:"samplePk"`
+	Date           int64   `json:"date"`
+	CalendarDate   Date    `json:"calendarDate"`
+	Weight         float64 `json:"weight"`
+	Bmi            float64 `json:"bmi"`
+	BodyFat        float64 `json:"bodyFat"`
+	BodyWater      float64 `json:"bodyWater"`
+	BoneMass       int64   `json:"boneMass"`
+	MuscleMass     int64   `json:"muscleMass"`
+	PhysiqueRating float64 `json:"physiqueRating"`
+	VisceralFat    float64 `json:"visceralFat"`
+	MetabolicAge   float64 `json:"metabolicAge"`
+	SourceType     string  `json:"sourceType"`
+	TimestampGmt   int64   `json:"timestampGMT"`
+	WeightDelta    float64 `json:"weightDelta"`
 }

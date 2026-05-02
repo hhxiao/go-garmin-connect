@@ -18,10 +18,11 @@ func TestGetCalendarYear_HasSummaries(t *testing.T) {
 
 	year, err := c.GetCalendarByYear(ctx, time.Now().Year())
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if len(year.YearSummaries) == 0 {
-		t.Fatal("expected at least one yearSummary")
+		t.Error("expected at least one yearSummary")
 	}
 }
 
@@ -34,7 +35,8 @@ func TestGetCalendarMonth_MatchesQuery(t *testing.T) {
 	want := garmin.GarminMonth(int(prev.Month()) - 1)
 	month, err := c.GetCalendarByMonth(ctx, prev.Year(), want)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if month.Year != prev.Year() {
 		t.Errorf("year: got %d, want %d", month.Year, prev.Year())
@@ -55,9 +57,10 @@ func TestGetCalendarWeek_BoundsContainQueryDay(t *testing.T) {
 	day := time.Now().AddDate(0, 0, -7)
 	week, err := c.GetCalendarByWeek(ctx, day)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if day.Before(week.StartDate.Time) || day.After(week.EndDate.Time.AddDate(0, 0, 1)) {
-		t.Fatalf("day %v not within %v–%v", day, week.StartDate.Time, week.EndDate.Time)
+		t.Errorf("day %v not within %v–%v", day, week.StartDate.Time, week.EndDate.Time)
 	}
 }

@@ -2,7 +2,6 @@ package garmin
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // ActivityDownloadFormat selects the file format DownloadActivity returns.
@@ -367,7 +366,7 @@ type GarminActivitySplits struct {
 
 // EventDto is an in-activity event marker.
 type EventDto struct {
-	StartTimeGmt            time.Time      `json:"startTimeGMT"`
+	StartTimeGmt            LocalDateTime  `json:"startTimeGMT"`
 	StartTimeGmtDoubleValue float64        `json:"startTimeGMTDoubleValue"`
 	SectionTypeDto          SectionTypeDto `json:"sectionTypeDTO"`
 }
@@ -381,7 +380,7 @@ type SectionTypeDto struct {
 
 // LapDto is a single lap inside GarminActivitySplits.
 type LapDto struct {
-	StartTimeGmt             time.Time                    `json:"startTimeGMT"`
+	StartTimeGmt             LocalDateTime                `json:"startTimeGMT"`
 	StartLatitude            float64                      `json:"startLatitude"`
 	StartLongitude           float64                      `json:"startLongitude"`
 	Distance                 float64                      `json:"distance"`
@@ -423,18 +422,18 @@ type LapDto struct {
 
 // LengthDto is a swim length inside a LapDto.
 type LengthDto struct {
-	StartTimeGmt         time.Time `json:"startTimeGMT"`
-	Distance             float64   `json:"distance"`
-	Duration             float64   `json:"duration"`
-	AverageSpeed         *float64  `json:"averageSpeed"`
-	MaxSpeed             float64   `json:"maxSpeed"`
-	Calories             float64   `json:"calories"`
-	AverageHr            float64   `json:"averageHR"`
-	MaxHr                float64   `json:"maxHR"`
-	TotalNumberOfStrokes *int64    `json:"totalNumberOfStrokes"`
-	AverageSwolf         float64   `json:"averageSWOLF"`
-	LengthIndex          int64     `json:"lengthIndex"`
-	SwimStroke           string    `json:"swimStroke"`
+	StartTimeGmt         LocalDateTime `json:"startTimeGMT"`
+	Distance             float64       `json:"distance"`
+	Duration             float64       `json:"duration"`
+	AverageSpeed         *float64      `json:"averageSpeed"`
+	MaxSpeed             float64       `json:"maxSpeed"`
+	Calories             float64       `json:"calories"`
+	AverageHr            float64       `json:"averageHR"`
+	MaxHr                float64       `json:"maxHR"`
+	TotalNumberOfStrokes *int64        `json:"totalNumberOfStrokes"`
+	AverageSwolf         float64       `json:"averageSWOLF"`
+	LengthIndex          int64         `json:"lengthIndex"`
+	SwimStroke           string        `json:"swimStroke"`
 }
 
 // GarminConnectIqMeasurement is reused across activity records.
@@ -584,8 +583,8 @@ type MetadataDto struct {
 	AgentString                     string            `json:"agentString"`
 	FileFormat                      FileFormat        `json:"fileFormat"`
 	AssociatedCourseID              string            `json:"associatedCourseId"`
-	LastUpdateDate                  time.Time         `json:"lastUpdateDate"`
-	UploadedDate                    time.Time         `json:"uploadedDate"`
+	LastUpdateDate                  LocalDateTime     `json:"lastUpdateDate"`
+	UploadedDate                    LocalDateTime     `json:"uploadedDate"`
 	VideoUrl                        string            `json:"videoUrl"`
 	HasPolyline                     bool              `json:"hasPolyline"`
 	HasChartData                    bool              `json:"hasChartData"`
@@ -647,50 +646,50 @@ type UserInfoDto struct {
 
 // SummaryDto is the wide summary block inside GarminExerciseSets.
 type SummaryDto struct {
-	StartTimeLocal                 time.Time `json:"startTimeLocal"`
-	StartTimeGmt                   time.Time `json:"startTimeGMT"`
-	StartLatitude                  float64   `json:"startLatitude"`
-	StartLongitude                 float64   `json:"startLongitude"`
-	Distance                       float64   `json:"distance"`
-	Duration                       float64   `json:"duration"`
-	MovingDuration                 float64   `json:"movingDuration"`
-	ElapsedDuration                float64   `json:"elapsedDuration"`
-	ElevationGain                  float64   `json:"elevationGain"`
-	ElevationLoss                  float64   `json:"elevationLoss"`
-	MaxElevation                   float64   `json:"maxElevation"`
-	MinElevation                   float64   `json:"minElevation"`
-	AverageSpeed                   float64   `json:"averageSpeed"`
-	AverageMovingSpeed             float64   `json:"averageMovingSpeed"`
-	MaxSpeed                       float64   `json:"maxSpeed"`
-	Calories                       float64   `json:"calories"`
-	AverageHr                      float64   `json:"averageHR"`
-	MaxHr                          float64   `json:"maxHR"`
-	AverageRunCadence              float64   `json:"averageRunCadence"`
-	MaxRunCadence                  float64   `json:"maxRunCadence"`
-	AverageTemperature             float64   `json:"averageTemperature"`
-	MaxTemperature                 float64   `json:"maxTemperature"`
-	MinTemperature                 float64   `json:"minTemperature"`
-	GroundContactTime              float64   `json:"groundContactTime"`
-	GroundContactBalanceLeft       float64   `json:"groundContactBalanceLeft"`
-	StrideLength                   float64   `json:"strideLength"`
-	VerticalOscillation            float64   `json:"verticalOscillation"`
-	TrainingEffect                 float64   `json:"trainingEffect"`
-	AnaerobicTrainingEffect        float64   `json:"anaerobicTrainingEffect"`
-	AerobicTrainingEffectMessage   string    `json:"aerobicTrainingEffectMessage"`
-	AnaerobicTrainingEffectMessage string    `json:"anaerobicTrainingEffectMessage"`
-	VerticalRatio                  float64   `json:"verticalRatio"`
-	EndLatitude                    float64   `json:"endLatitude"`
-	EndLongitude                   float64   `json:"endLongitude"`
-	MaxVerticalSpeed               float64   `json:"maxVerticalSpeed"`
-	WaterEstimated                 float64   `json:"waterEstimated"`
-	MinRespirationRate             float64   `json:"minRespirationRate"`
-	MaxRespirationRate             float64   `json:"maxRespirationRate"`
-	AvgRespirationRate             float64   `json:"avgRespirationRate"`
-	TrainingEffectLabel            string    `json:"trainingEffectLabel"`
-	ActivityTrainingLoad           float64   `json:"activityTrainingLoad"`
-	MinActivityLapDuration         float64   `json:"minActivityLapDuration"`
-	ModerateIntensityMinutes       int64     `json:"moderateIntensityMinutes"`
-	VigorousIntensityMinutes       int64     `json:"vigorousIntensityMinutes"`
+	StartTimeLocal                 LocalDateTime `json:"startTimeLocal"`
+	StartTimeGmt                   LocalDateTime `json:"startTimeGMT"`
+	StartLatitude                  float64       `json:"startLatitude"`
+	StartLongitude                 float64       `json:"startLongitude"`
+	Distance                       float64       `json:"distance"`
+	Duration                       float64       `json:"duration"`
+	MovingDuration                 float64       `json:"movingDuration"`
+	ElapsedDuration                float64       `json:"elapsedDuration"`
+	ElevationGain                  float64       `json:"elevationGain"`
+	ElevationLoss                  float64       `json:"elevationLoss"`
+	MaxElevation                   float64       `json:"maxElevation"`
+	MinElevation                   float64       `json:"minElevation"`
+	AverageSpeed                   float64       `json:"averageSpeed"`
+	AverageMovingSpeed             float64       `json:"averageMovingSpeed"`
+	MaxSpeed                       float64       `json:"maxSpeed"`
+	Calories                       float64       `json:"calories"`
+	AverageHr                      float64       `json:"averageHR"`
+	MaxHr                          float64       `json:"maxHR"`
+	AverageRunCadence              float64       `json:"averageRunCadence"`
+	MaxRunCadence                  float64       `json:"maxRunCadence"`
+	AverageTemperature             float64       `json:"averageTemperature"`
+	MaxTemperature                 float64       `json:"maxTemperature"`
+	MinTemperature                 float64       `json:"minTemperature"`
+	GroundContactTime              float64       `json:"groundContactTime"`
+	GroundContactBalanceLeft       float64       `json:"groundContactBalanceLeft"`
+	StrideLength                   float64       `json:"strideLength"`
+	VerticalOscillation            float64       `json:"verticalOscillation"`
+	TrainingEffect                 float64       `json:"trainingEffect"`
+	AnaerobicTrainingEffect        float64       `json:"anaerobicTrainingEffect"`
+	AerobicTrainingEffectMessage   string        `json:"aerobicTrainingEffectMessage"`
+	AnaerobicTrainingEffectMessage string        `json:"anaerobicTrainingEffectMessage"`
+	VerticalRatio                  float64       `json:"verticalRatio"`
+	EndLatitude                    float64       `json:"endLatitude"`
+	EndLongitude                   float64       `json:"endLongitude"`
+	MaxVerticalSpeed               float64       `json:"maxVerticalSpeed"`
+	WaterEstimated                 float64       `json:"waterEstimated"`
+	MinRespirationRate             float64       `json:"minRespirationRate"`
+	MaxRespirationRate             float64       `json:"maxRespirationRate"`
+	AvgRespirationRate             float64       `json:"avgRespirationRate"`
+	TrainingEffectLabel            string        `json:"trainingEffectLabel"`
+	ActivityTrainingLoad           float64       `json:"activityTrainingLoad"`
+	MinActivityLapDuration         float64       `json:"minActivityLapDuration"`
+	ModerateIntensityMinutes       int64         `json:"moderateIntensityMinutes"`
+	VigorousIntensityMinutes       int64         `json:"vigorousIntensityMinutes"`
 }
 
 // TimeZoneUnitDto is the timezone unit descriptor.

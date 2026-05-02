@@ -120,8 +120,26 @@ GARMIN_LOGIN=you@example.com GARMIN_PASSWORD=… \
 
 # Include destructive tests that mutate account state (sleep window,
 # update workout, schedule workout, add/remove weight & blood pressure).
-GARMIN_RUN_DESTRUCTIVE=1 GARMIN_LOGIN=… GARMIN_PASSWORD=… \
+GARMIN_RUN_MUTATION_TESTS=1 GARMIN_LOGIN=… GARMIN_PASSWORD=… \
   go test -tags=integration ./integration/...
+```
+
+### Using a .env file
+
+Create a `.env` file in the project root:
+
+```
+GARMIN_LOGIN=you@example.com
+GARMIN_PASSWORD=your-password
+```
+
+Then load it and run:
+
+```bash
+export $(cat .env | xargs) && go test -tags=integration ./integration/...
+
+# With destructive tests:
+export $(cat .env | xargs) && GARMIN_RUN_MUTATION_TESTS=1 go test -tags=integration ./integration/...
 ```
 
 The `integration` build tag mirrors the C# `[Collection("Garmin Integrations")]`

@@ -18,10 +18,9 @@ func TestGetReportHrvStatus_NotEmptyOrSkip(t *testing.T) {
 	start := end.AddDate(0, 0, -3)
 	report, err := c.GetReportHrvStatus(ctx, start, end)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
-	// Mirrors C# behaviour: HRV may genuinely be absent for some accounts;
-	// an empty list is allowed but the call must succeed.
 	if len(report.HrvSummaries) == 0 {
 		t.Skip("no HRV summaries in window")
 	}

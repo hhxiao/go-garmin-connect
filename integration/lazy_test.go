@@ -11,7 +11,7 @@
 //
 // Tokens are cached in `$HOME/.garmin_token.json` to keep the SSO flow off
 // the hot path between runs. A few tests are skipped by default because they
-// mutate device state — set GARMIN_RUN_DESTRUCTIVE=1 to opt in.
+// mutate device state — set GARMIN_RUN_MUTATION_TESTS=1 to opt in.
 package integration
 
 import (
@@ -60,7 +60,7 @@ func lazyClient(t *testing.T) *garmin.Client {
 
 // runDestructive returns true when the caller has explicitly opted in to
 // tests that mutate state (sleep window, send-to-device, file upload).
-func runDestructive() bool { return os.Getenv("GARMIN_RUN_DESTRUCTIVE") == "1" }
+func runDestructive() bool { return os.Getenv("GARMIN_RUN_MUTATION_TESTS") == "1" }
 
 type stringErr string
 

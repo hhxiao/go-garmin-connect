@@ -23,10 +23,11 @@ func TestGetUserSummary_NotZero(t *testing.T) {
 
 	s, err := c.GetUserSummary(ctx, start)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if s.UserProfileID == 0 {
-		t.Fatal("expected non-zero UserProfileID")
+		t.Error("expected non-zero UserProfileID")
 	}
 }
 
@@ -38,10 +39,11 @@ func TestGetWellnessStepsData_NotNil(t *testing.T) {
 
 	steps, err := c.GetWellnessStepsData(ctx, start)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if steps == nil {
-		t.Fatal("expected non-nil slice")
+		t.Error("expected non-nil slice")
 	}
 }
 
@@ -53,7 +55,8 @@ func TestGetWellnessSleepData_HasDate(t *testing.T) {
 
 	sleep, err := c.GetWellnessSleepData(ctx, start)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if sleep.DailySleepDto.UserProfilePk == 0 {
 		t.Skip("no sleep data for yesterday")
@@ -68,7 +71,8 @@ func TestGetWellnessHeartRates_HasDate(t *testing.T) {
 
 	hr, err := c.GetWellnessHeartRates(ctx, start)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if hr.UserProfilePk == 0 {
 		t.Skip("no HR data for yesterday")
@@ -83,10 +87,11 @@ func TestGetWellnessBodyBattery_NotNil(t *testing.T) {
 
 	bb, err := c.GetWellnessBodyBatteryData(ctx, start, end)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if bb == nil {
-		t.Fatal("expected non-nil slice")
+		t.Error("expected non-nil slice")
 	}
 }
 
@@ -98,7 +103,8 @@ func TestGetHydrationData_NotZero(t *testing.T) {
 
 	h, err := c.GetHydrationData(ctx, start)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if h.UserID == 0 {
 		t.Skip("no hydration data")
@@ -113,9 +119,10 @@ func TestGetBodyComposition_HasDates(t *testing.T) {
 
 	bc, err := c.GetBodyComposition(ctx, start, end)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
-	if bc.StartDate.IsZero() {
-		t.Skip("no body-composition data in window")
+	if bc.StartDate.IsZero() && bc.EndDate.IsZero() {
+		t.Skip("no body composition data")
 	}
 }

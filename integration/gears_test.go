@@ -16,10 +16,11 @@ func TestGetGearTypes_NotEmpty(t *testing.T) {
 
 	types, err := c.GetGearTypes(ctx)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if len(types) == 0 {
-		t.Fatal("expected at least one gear type")
+		t.Error("expected at least one gear type")
 	}
 }
 
@@ -30,7 +31,8 @@ func TestGetUserGears_NotEmpty(t *testing.T) {
 
 	acts, err := c.GetActivities(ctx, 1, 1)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if len(acts) == 0 {
 		t.Skip("no activities")
@@ -38,7 +40,8 @@ func TestGetUserGears_NotEmpty(t *testing.T) {
 
 	gears, err := c.GetUserGears(ctx, acts[0].OwnerID)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if len(gears) == 0 {
 		t.Skip("no gear registered")
@@ -52,7 +55,8 @@ func TestGetActivityGears_NotNil(t *testing.T) {
 
 	acts, err := c.GetActivities(ctx, 1, 1)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
 	if len(acts) == 0 {
 		t.Skip("no activities")
@@ -60,11 +64,10 @@ func TestGetActivityGears_NotNil(t *testing.T) {
 
 	gears, err := c.GetActivityGears(ctx, acts[0].ActivityID)
 	if err != nil {
-		t.Fatal(err)
+		t.Error(err)
+		return
 	}
-	// Activity gears can legitimately be empty for non-running/cycling activities
-	// — match the C# test which only asserts non-nil.
 	if gears == nil {
-		t.Fatal("expected non-nil slice")
+		t.Error("expected non-nil slice")
 	}
 }

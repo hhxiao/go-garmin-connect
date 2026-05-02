@@ -52,7 +52,7 @@ type GarminAuthor struct {
 // GarminUnit is a measurement-unit descriptor reused across workout fields.
 type GarminUnit struct {
 	UnitID  *int64   `json:"unitId"`
-	UnitKey string   `json:"unitKey"`
+	UnitKey *string  `json:"unitKey"`
 	Factor  *float64 `json:"factor"`
 }
 

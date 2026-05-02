@@ -164,16 +164,16 @@ type GarminGear struct {
 	DateEnd         *LocalDateTime `json:"dateEnd"`
 	MaximumMeters   float64        `json:"maximumMeters"`
 	Notified        bool           `json:"notified"`
-	CreateDate      time.Time      `json:"createDate"`
-	UpdateDate      time.Time      `json:"updateDate"`
+	CreateDate      LocalDateTime  `json:"createDate"`
+	UpdateDate      LocalDateTime  `json:"updateDate"`
 }
 
 // GarminGearType is one available gear-type lookup entry.
 type GarminGearType struct {
-	GearTypePk   int        `json:"gearTypePk"`
-	GearTypeName string     `json:"gearTypeName"`
-	CreateDate   time.Time  `json:"createDate"`
-	UpdateData   *time.Time `json:"updateData"`
+	GearTypePk   int            `json:"gearTypePk"`
+	GearTypeName string         `json:"gearTypeName"`
+	CreateDate   LocalDateTime  `json:"createDate"`
+	UpdateData   *LocalDateTime `json:"updateData"`
 }
 
 // GarminPersonalRecord is one entry in the personal-records list.
@@ -183,14 +183,14 @@ type GarminPersonalRecord struct {
 	ActivityID                          int64          `json:"activityId"`
 	ActivityName                        string         `json:"activityName"`
 	ActivityStartDateTimeInGmt          int64          `json:"activityStartDateTimeInGMT"`
-	ActStartDateTimeInGmtFormatted      *time.Time     `json:"actStartDateTimeInGMTFormatted"`
+	ActStartDateTimeInGmtFormatted      *LocalDateTime `json:"actStartDateTimeInGMTFormatted"`
 	ActivityStartDateTimeLocal          *int64         `json:"activityStartDateTimeLocal"`
-	ActivityStartDateTimeLocalFormatted *time.Time     `json:"activityStartDateTimeLocalFormatted"`
+	ActivityStartDateTimeLocalFormatted *LocalDateTime `json:"activityStartDateTimeLocalFormatted"`
 	Value                               float64        `json:"value"`
 	PrStartTimeGmt                      int64          `json:"prStartTimeGmt"`
-	PrStartTimeGmtFormatted             time.Time      `json:"prStartTimeGmtFormatted"`
+	PrStartTimeGmtFormatted             LocalDateTime  `json:"prStartTimeGmtFormatted"`
 	PrStartTimeLocal                    int64          `json:"prStartTimeLocal"`
-	PrStartTimeLocalFormatted           *time.Time     `json:"prStartTimeLocalFormatted"`
+	PrStartTimeLocalFormatted           *LocalDateTime `json:"prStartTimeLocalFormatted"`
 	PrTypeLabelKey                      string         `json:"prTypeLabelKey"`
 	PoolLengthUnit                      PoolLengthUnit `json:"poolLengthUnit"`
 }
