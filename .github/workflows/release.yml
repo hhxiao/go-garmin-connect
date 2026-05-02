@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+    - 'v*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    -
+      name: Set env
+      run: |
+        echo "GO_VERSION=$(grep '^go' go.mod | awk '{print $2}')" >> $GITHUB_ENV
+        echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    -
+      name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ env.GO_VERSION }}
+        cache: true
+    -
+      name: Vet + tests
+      run: |
+        go vet ./...
+        go test -race -cover ./...
+    -
+      name: Extract changelog for release
+      id: changelog
+      run: |
+        version="${{ env.RELEASE_VERSION }}"
+        # Match either "## [vX.Y.Z]" or "## [vX.Y.Z] - 2026-05-02" — the awk
+        # template stops at the next "## [" header so trailing sections do
+        # not bleed into the release notes.
+        notes=$(awk "/^## \[${version}\]/{found=1; next} found && /^## \[/{exit} found{print}" CHANGELOG.md)
+        if [ -z "$notes" ]; then
+          echo "::warning::no CHANGELOG.md section found for ${version}"
+          notes="Release ${version}"
+        fi
+        {
+          echo "notes<<EOF"
+          echo "$notes"
+          echo "EOF"
+        } >> $GITHUB_OUTPUT
+    -
+      name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.RELEASE_VERSION }}
+        name: ${{ env.RELEASE_VERSION }}
+        body: ${{ steps.changelog.outputs.notes }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    -
+      name: Warm pkg.go.dev proxy
+      # Tickling the Go module proxy makes `go get @vX.Y.Z` work immediately
+      # for downstream consumers, instead of waiting for the proxy to discover
+      # the tag organically.
+      run: |
+        module=$(grep '^module' go.mod | awk '{print $2}')
+        curl -sSf "https://proxy.golang.org/${module}/@v/${{ env.RELEASE_VERSION }}.info" || true
