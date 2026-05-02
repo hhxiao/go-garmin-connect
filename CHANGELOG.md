@@ -93,11 +93,3 @@ surface.
 ### Errors
 - `*garmin.RequestError` — non-2xx HTTP response with URL + status + body.
 - `garmin.TooManyRequestsError` — HTTP 429.
-
-### Notes
-- Module path `github.com/sealbro/go-garmin-connect`; version exposed as
-  `garmin.Version`.
-- `go test ./...` runs offline unit tests.
-- `go test -tags=integration ./integration/...` runs the live integration
-  suite (mirrors C# `[Collection("Garmin Integrations")]`); set
-  `GARMIN_RUN_DESTRUCTIVE=1` to opt into state-mutating cases.
