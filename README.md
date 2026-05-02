@@ -12,7 +12,7 @@ go get github.com/sealbro/go-garmin-connect@latest
 ```
 
 The module is versioned with semver — pin a tag (`@v0.1.0`) for reproducible
-builds. The released version is exposed as `garmin.Version`.
+builds.
 
 ## Quick start
 

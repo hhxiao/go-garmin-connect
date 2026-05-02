@@ -1,3 +1,4 @@
+// Package garmin is an unofficial Go client for the Garmin Connect web API.
 package garmin
 
 import (
